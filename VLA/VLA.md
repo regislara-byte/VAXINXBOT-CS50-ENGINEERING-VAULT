@@ -190,3 +190,17 @@ Status:
 ONLINE
 PUBLIC
 ACTIVE DEVELOPMENT
+
+## checkpoint_038_cs50_vault_appeal.png
+Title: Scratch Appeal Submitted
+
+Summary:
+Submitted formal appeal to Scratch Team regarding network block.
+Included:
+- Scratch username
+- edX CS50x profile
+- GitHub repository
+- Educational use explanation
+
+Status:
+UNDER REVIEW
