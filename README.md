@@ -1,10 +1,18 @@
-# VAXINXBOT
+# VAXINXBOT CS50 Engineering Vault
 
 > **Learning by building, documenting, and shipping.**
 
 VAXINXBOT is my Applied Engineering Vault for CS50x, AI tools, cybersecurity projects, GitHub development, and Visual Lore Artifacts (VLA).
 
 This repository documents my journey from beginner-friendly Scratch projects to real-world software development using GitHub, VS Code, HTML, JavaScript, Python, and AI-assisted workflows.
+
+🚀 GitHub Repository
+📚 CS50 Learning Journey
+🗂️ Visual Learning Archive (VLA)
+🤖 VAXINXBOT Companion
+🔐 Cybersecurity Projects
+
+Live : https://regislara-byte.github.io/VAXINXBOT-CS50-ENGINEERING-VAULT/
 
 ---
 

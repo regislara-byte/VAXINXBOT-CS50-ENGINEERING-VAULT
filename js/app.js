@@ -99,62 +99,74 @@ function loadAll() {
 const THEME_MODES = {
   dark: {
     label: 'Dark',
-    desc:  'Default dark shell — full contrast, blue glow.',
+    desc:  'Tokyo Night — deep navy, vivid cyan, crisp contrast.',
     vars: {
-      '--bg-shell':      '#0d0f14',
-      '--bg-panel':      '#111520',
-      '--bg-panel-alt':  '#151a27',
-      '--bg-card':       '#1a2035',
-      '--bg-card-hover': '#1f2740',
-      '--bg-input':      '#0f1320',
-      '--blue':          '#3ab5f5',
-      '--blue-glow':     'rgba(58,181,245,0.18)',
-      '--blue-glow-md':  'rgba(58,181,245,0.35)',
-      '--text-primary':  '#e8eaf2',
-      '--text-secondary':'#8b93b0',
-      '--border':        'rgba(58,181,245,0.12)',
-      '--border-active': 'rgba(58,181,245,0.40)',
-      '--shadow-blue':   '0 0 18px rgba(58,181,245,0.25)',
+      '--bg-shell':      '#1a1b2e',
+      '--bg-panel':      '#16213e',
+      '--bg-panel-alt':  '#1a2344',
+      '--bg-card':       '#1f2b50',
+      '--bg-card-hover': '#253460',
+      '--bg-input':      '#131729',
+      '--blue':          '#7aa2f7',
+      '--blue-glow':     'rgba(122,162,247,0.18)',
+      '--blue-glow-md':  'rgba(122,162,247,0.36)',
+      '--text-primary':  '#c0caf5',
+      '--text-secondary':'#6b7db3',
+      '--text-muted':    '#3b4a6b',
+      '--border':        'rgba(122,162,247,0.13)',
+      '--border-active': 'rgba(122,162,247,0.42)',
+      '--shadow-blue':   '0 0 18px rgba(122,162,247,0.28)',
+      '--amber':         '#e0af68',
+      '--amber-glow':    'rgba(224,175,104,0.14)',
+      '--border-amber':  'rgba(224,175,104,0.30)',
     },
   },
   focus: {
     label: 'Focus',
-    desc:  'Reduced distraction — softer glow, deeper center.',
+    desc:  'Matrix Green — terminal phosphor, pure concentration.',
     vars: {
-      '--bg-shell':      '#08090e',
-      '--bg-panel':      '#0c0f18',
-      '--bg-panel-alt':  '#0e1120',
-      '--bg-card':       '#111626',
-      '--bg-card-hover': '#161c2e',
-      '--bg-input':      '#090c15',
-      '--blue':          '#2d9fd8',
-      '--blue-glow':     'rgba(45,159,216,0.10)',
-      '--blue-glow-md':  'rgba(45,159,216,0.20)',
-      '--text-primary':  '#cdd2e0',
-      '--text-secondary':'#6b7490',
-      '--border':        'rgba(45,159,216,0.08)',
-      '--border-active': 'rgba(45,159,216,0.28)',
-      '--shadow-blue':   '0 0 10px rgba(45,159,216,0.14)',
+      '--bg-shell':      '#0a0c0a',
+      '--bg-panel':      '#0d100d',
+      '--bg-panel-alt':  '#101410',
+      '--bg-card':       '#141a14',
+      '--bg-card-hover': '#182018',
+      '--bg-input':      '#090b09',
+      '--blue':          '#39ff14',
+      '--blue-glow':     'rgba(57,255,20,0.10)',
+      '--blue-glow-md':  'rgba(57,255,20,0.22)',
+      '--text-primary':  '#b0ffb0',
+      '--text-secondary':'#4a7a4a',
+      '--text-muted':    '#254025',
+      '--border':        'rgba(57,255,20,0.09)',
+      '--border-active': 'rgba(57,255,20,0.30)',
+      '--shadow-blue':   '0 0 12px rgba(57,255,20,0.18)',
+      '--amber':         '#39ff14',
+      '--amber-glow':    'rgba(57,255,20,0.10)',
+      '--border-amber':  'rgba(57,255,20,0.25)',
     },
   },
   soft: {
     label: 'Soft',
-    desc:  'Warm companion mode — gentle contrast, easy on the eyes.',
+    desc:  'Dracula Moon — purple dusk, warm reading light.',
     vars: {
-      '--bg-shell':      '#111018',
-      '--bg-panel':      '#181622',
-      '--bg-panel-alt':  '#1c1a28',
-      '--bg-card':       '#221f30',
-      '--bg-card-hover': '#272438',
-      '--bg-input':      '#13111e',
-      '--blue':          '#7eb8f7',
-      '--blue-glow':     'rgba(126,184,247,0.14)',
-      '--blue-glow-md':  'rgba(126,184,247,0.26)',
-      '--text-primary':  '#e2dff0',
-      '--text-secondary':'#9490b0',
-      '--border':        'rgba(126,184,247,0.10)',
-      '--border-active': 'rgba(126,184,247,0.32)',
-      '--shadow-blue':   '0 0 14px rgba(126,184,247,0.18)',
+      '--bg-shell':      '#191624',
+      '--bg-panel':      '#1e1a2e',
+      '--bg-panel-alt':  '#221d34',
+      '--bg-card':       '#2a2440',
+      '--bg-card-hover': '#312b4a',
+      '--bg-input':      '#16132a',
+      '--blue':          '#bd93f9',
+      '--blue-glow':     'rgba(189,147,249,0.14)',
+      '--blue-glow-md':  'rgba(189,147,249,0.28)',
+      '--text-primary':  '#f8f8f2',
+      '--text-secondary':'#8b85a8',
+      '--text-muted':    '#4e4868',
+      '--border':        'rgba(189,147,249,0.12)',
+      '--border-active': 'rgba(189,147,249,0.38)',
+      '--shadow-blue':   '0 0 16px rgba(189,147,249,0.22)',
+      '--amber':         '#ffb86c',
+      '--amber-glow':    'rgba(255,184,108,0.14)',
+      '--border-amber':  'rgba(255,184,108,0.30)',
     },
   },
 };
@@ -753,8 +765,41 @@ function detectCS50Topic(input) {
 }
 
 /* ══════════════════════════════════════════════════════
-   README ENGINE v2
+   COMPANION PERSONALITY
 ══════════════════════════════════════════════════════ */
+
+const COMPANION = {
+  micro: {
+    cs50:   ['Let\'s break it down.', 'On it.', 'Good question.', 'Here we go.'],
+    readme: ['I\'ll structure this cleanly.', 'Formatting now.', 'Building your README.'],
+    vla:    ['Checkpoint ready.', 'Logging entry.', 'Indexing now.'],
+    debug:  ['Let\'s isolate the issue.', 'Tracing the bug.', 'Checklist incoming.'],
+    git:    ['Commit path prepared.', 'Git workflow ready.', 'Staging commands.'],
+  },
+  typing: {
+    cs50:   'vaxinxdoppio is thinking…',
+    readme: 'structuring markdown…',
+    vla:    'indexing checkpoint…',
+    debug:  'tracing issue…',
+    git:    'preparing command…',
+  },
+  footer: {
+    cs50:   'Study → Build → Test',
+    readme: 'Copy → Polish → Commit',
+    vla:    'Capture → Index → Push',
+    debug:  'Isolate → Test → Fix',
+    git:    'Stage → Commit → Push',
+  },
+  boot: [
+    'CS50-CHATBOT-001 initialized.',
+    'vaxinxdoppio online.',
+    'Study shell ready.',
+    'Tree Structure + VLA loaded.',
+    'Local tutor mode active.',
+  ],
+};
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 const README_HELP = `**README Mode — Commands**
 
@@ -1451,7 +1496,13 @@ function scrollToBottom() {
   DOM.chatMessages.scrollTop = DOM.chatMessages.scrollHeight;
 }
 
-function showTyping() { DOM.typingIndicator.style.display = 'flex'; scrollToBottom(); }
+function showTyping() {
+  const label = COMPANION.typing[state.mode] || 'vaxinxdoppio is thinking…';
+  const small = DOM.typingIndicator.querySelector('small');
+  if (small) small.textContent = label;
+  DOM.typingIndicator.style.display = 'flex';
+  scrollToBottom();
+}
 function hideTyping() { DOM.typingIndicator.style.display = 'none'; }
 
 /* ══════════════════════════════════════════════════════
@@ -1473,8 +1524,24 @@ function sendMessage() {
   const delay = 180 + Math.random() * 380;
   setTimeout(() => {
     hideTyping();
-    const botText = getBotResponse(text);
-    const botMsg  = { role: 'bot', text: botText, mode: state.mode, ts: Date.now() };
+
+    // Micro-response (skip for slash commands)
+    const isSlash = text.startsWith('/');
+    if (!isSlash) {
+      const micro = pick(COMPANION.micro[state.mode] || ['On it.']);
+      const microMsg = { role: 'bot', text: micro, ts: Date.now() };
+      state.messages.push(microMsg);
+      renderMessage(microMsg);
+    }
+
+    // Main response + footer
+    let botText = getBotResponse(text);
+    if (!isSlash) {
+      const footer = COMPANION.footer[state.mode];
+      if (footer) botText += `\n\n<span style="font-family:var(--font-mono);font-size:9.5px;color:var(--text-muted);letter-spacing:.06em;">${footer}</span>`;
+    }
+
+    const botMsg = { role: 'bot', text: botText, mode: state.mode, ts: Date.now() };
     state.messages.push(botMsg);
     renderMessage(botMsg);
     saveMessages();
@@ -1627,11 +1694,18 @@ function boot() {
   injectThemeStyles();
   applyTheme(state.theme);
   setMode(state.mode);
+
+  // Randomize boot greeting inside existing .msg--boot block
+  const bootLines = document.querySelectorAll('.boot-line');
+  if (bootLines.length >= 1) {
+    bootLines[0].textContent = '> ' + pick(COMPANION.boot);
+  }
+
   restoreHistory();
   restoreNote();
   bindEvents();
   scrollToBottom();
-  console.log('[CS50-CHATBOT-001 v0.3] boot complete · mode:', state.mode, '· theme:', state.theme);
+  console.log('[CS50-CHATBOT-001 v0.4] boot · mode:', state.mode, '· theme:', state.theme);
 }
 
 document.addEventListener('DOMContentLoaded', boot);
