@@ -1,0 +1,6 @@
+# Local lecture videos - too large for GitHub
+vidlecture/videos-local/
+*.mp4
+*.mkv
+*.mov
+*.avi

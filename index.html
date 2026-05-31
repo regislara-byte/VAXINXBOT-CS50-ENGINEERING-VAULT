@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CS50-CHATBOT-001</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ░░ SHELL WRAPPER ░░ -->
+  <div class="shell">
+
+    <!-- ══════════════════════════════════════
+         LEFT PANEL — MASCOT + MODE BUTTONS
+    ══════════════════════════════════════ -->
+    <aside class="panel panel--left">
+
+      <!-- Top bar label -->
+      <div class="panel__label">
+        <span class="dot dot--green"></span>
+        <span class="dot dot--yellow"></span>
+        <span class="dot dot--red"></span>
+        <span class="panel__title">navigator.exe</span>
+      </div>
+
+      <!-- Mascot -->
+      <div class="mascot-wrap">
+        <div class="mascot-frame">
+          <img
+            src="assets/vaxinxdoppio_chatbot.png"
+            alt="vaxinxdoppio — your CS50 tutor"
+            class="mascot-img"
+            onerror="this.style.display='none'; document.querySelector('.mascot-fallback').style.display='flex';"
+          />
+          <div class="mascot-fallback" style="display:none;">
+            <span class="mascot-emoji">🤖</span>
+          </div>
+        </div>
+        <p class="mascot-name">vaxinxdoppio</p>
+        <p class="mascot-role">// CS50 companion</p>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>— modes —</span>
+      </div>
+
+      <!-- Mode Buttons -->
+      <nav class="mode-nav" id="modeNav">
+        <button class="mode-btn active" data-mode="cs50" title="Explain CS50 topics">
+          <span class="mode-btn__icon">📘</span>
+          <span class="mode-btn__label">Explain CS50</span>
+          <span class="mode-btn__tag">F1</span>
+        </button>
+        <button class="mode-btn" data-mode="readme" title="Generate README sections">
+          <span class="mode-btn__icon">📄</span>
+          <span class="mode-btn__label">README</span>
+          <span class="mode-btn__tag">F2</span>
+        </button>
+        <button class="mode-btn" data-mode="vla" title="Create VLA entries">
+          <span class="mode-btn__icon">🗂️</span>
+          <span class="mode-btn__label">VLA</span>
+          <span class="mode-btn__tag">F3</span>
+        </button>
+        <button class="mode-btn" data-mode="debug" title="Debug notes & checklist">
+          <span class="mode-btn__icon">🐛</span>
+          <span class="mode-btn__label">Debug</span>
+          <span class="mode-btn__tag">F4</span>
+        </button>
+        <button class="mode-btn" data-mode="git" title="Git helper commands">
+          <span class="mode-btn__icon">🌿</span>
+          <span class="mode-btn__label">Git</span>
+          <span class="mode-btn__tag">F5</span>
+        </button>
+      </nav>
+
+      <!-- Bottom status -->
+      <div class="left-footer">
+        <div class="status-row">
+          <span class="status-dot status-dot--online"></span>
+          <span class="status-text">local mode</span>
+        </div>
+        <div class="status-row">
+          <span class="status-text muted">v0.1 — Phase 1</span>
+        </div>
+      </div>
+
+    </aside>
+
+
+    <!-- ══════════════════════════════════════
+         CENTER PANEL — CHAT WINDOW
+    ══════════════════════════════════════ -->
+    <main class="panel panel--center">
+
+      <!-- Chat header -->
+      <header class="chat-header">
+        <div class="chat-header__left">
+          <div class="chat-header__badge">
+            <span class="badge-line badge-line--top">CS50-CHATBOT-001</span>
+            <span class="badge-line badge-line--sub">Tree Structure + VLA</span>
+          </div>
+        </div>
+        <div class="chat-header__right">
+          <span class="header-chip" id="modeChip">MODE: CS50</span>
+          <button class="icon-btn" id="clearBtn" title="Clear chat">⌫</button>
+        </div>
+      </header>
+
+      <!-- Chat messages -->
+      <div class="chat-messages" id="chatMessages">
+
+        <!-- Boot message (static, shown on load) -->
+        <div class="msg msg--bot msg--boot">
+          <div class="msg__avatar">🤖</div>
+          <div class="msg__bubble">
+            <div class="msg__meta">vaxinxdoppio · boot</div>
+            <div class="msg__text">
+              <span class="boot-line">&gt; CS50-CHATBOT-001 initialized.</span><br/>
+              <span class="boot-line">&gt; Select a mode from the left panel.</span><br/>
+              <span class="boot-line">&gt; Type your question below. I'm ready.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Typing indicator (hidden by default) -->
+      <div class="typing-indicator" id="typingIndicator" style="display:none;">
+        <span></span><span></span><span></span>
+        <small>vaxinxdoppio is thinking…</small>
+      </div>
+
+      <!-- Input bar -->
+      <div class="chat-input-bar">
+        <div class="mode-badge-mini" id="modeBadgeMini">CS50</div>
+        <textarea
+          id="chatInput"
+          class="chat-input"
+          placeholder="Ask about CS50, paste your code, or request a VLA entry…"
+          rows="1"
+          autocomplete="off"
+          spellcheck="false"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" title="Send (Enter)">
+          <span class="send-icon">↑</span>
+        </button>
+      </div>
+
+    </main>
+
+
+    <!-- ══════════════════════════════════════
+         RIGHT PANEL — CHECKPOINT VIEWER
+    ══════════════════════════════════════ -->
+    <aside class="panel panel--right">
+
+      <div class="panel__label">
+        <span class="dot dot--blue"></span>
+        <span class="panel__title">checkpoints.log</span>
+      </div>
+
+      <div class="checkpoint-header">
+        <h3 class="checkpoint-title">VLA Index</h3>
+        <span class="checkpoint-count" id="checkpointCount">7 entries</span>
+      </div>
+
+      <!-- Checkpoint list -->
+      <ul class="checkpoint-list" id="checkpointList">
+
+        <li class="checkpoint-item checkpoint-item--done" data-vla="001">
+          <div class="cp-marker">✓</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-001</span>
+            <span class="cp-name">Boot</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_001_boot.png" alt="VLA-001" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+        <li class="checkpoint-item checkpoint-item--done" data-vla="002">
+          <div class="cp-marker">✓</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-002</span>
+            <span class="cp-name">UI</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_002_ui.png" alt="VLA-002" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+        <li class="checkpoint-item checkpoint-item--done" data-vla="003">
+          <div class="cp-marker">✓</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-003</span>
+            <span class="cp-name">Logic</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_003_logic.jpeg" alt="VLA-003" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+        <li class="checkpoint-item checkpoint-item--done" data-vla="004">
+          <div class="cp-marker">✓</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-004</span>
+            <span class="cp-name">Terminal Awakened</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_004_terminal_awakened.jpeg" alt="VLA-004" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+        <li class="checkpoint-item checkpoint-item--done" data-vla="005">
+          <div class="cp-marker">✓</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-005</span>
+            <span class="cp-name">Code.dot Unlock</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_005_code_dot_unlock.jpeg" alt="VLA-005" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+        <li class="checkpoint-item checkpoint-item--done" data-vla="006">
+          <div class="cp-marker">✓</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-006</span>
+            <span class="cp-name">CS50 First Contact</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_006_cs50_first_contact.png" alt="VLA-006" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+        <li class="checkpoint-item checkpoint-item--active" data-vla="007">
+          <div class="cp-marker cp-marker--active">▶</div>
+          <div class="cp-info">
+            <span class="cp-id">VLA-007</span>
+            <span class="cp-name">Chatbot Birth</span>
+          </div>
+          <div class="cp-thumb">
+            <img src="VLA/checkpoint_007_chatbot_birth.jpeg" alt="VLA-007" onerror="this.parentElement.classList.add('no-img')" />
+          </div>
+        </li>
+
+      </ul>
+
+      <!-- Notes quick-save -->
+      <div class="notes-section">
+        <div class="notes-label">// quick note</div>
+        <textarea
+          id="quickNote"
+          class="notes-input"
+          placeholder="Drop a note here… (auto-saved)"
+          rows="3"
+        ></textarea>
+        <button class="notes-save-btn" id="saveNoteBtn">save note</button>
+      </div>
+
+      <!-- Right footer -->
+      <div class="right-footer">
+        <span class="muted">memory: localStorage</span>
+        <button class="icon-btn small" id="exportBtn" title="Export notes">↓ export</button>
+      </div>
+
+    </aside>
+
+  </div><!-- /.shell -->
+
+  <!-- Checkpoint preview modal -->
+  <div class="cp-modal" id="cpModal" style="display:none;">
+    <div class="cp-modal__inner">
+      <button class="cp-modal__close" id="cpModalClose">✕</button>
+      <img src="" alt="" id="cpModalImg" />
+      <p id="cpModalLabel"></p>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
