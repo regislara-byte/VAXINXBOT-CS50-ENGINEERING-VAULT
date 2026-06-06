@@ -1,226 +1,184 @@
 # VAXINXBOT — VISUAL LORE ARTIFACT INDEX
 
 Project:
-VAXINXBOT
-
-Purpose:
-CS50 chatbot companion
-README helper
-VLA recorder
-Git workflow assistant
-
----
-
-## CHECKPOINT LOG
-
-### VLA-001
-File:
-checkpoint_001_boot.jpeg
+VAXINXBOT CS50 Engineering Vault
 
 Status:
-ROOT CREATED
-
-Notes:
-Initial VAXINXBOT structure generated.
-Folders established:
-assets
-css
-docs
-js
-modules
-prompts
-VLA
-
----
-
-### VLA-002
-File:
-checkpoint_002_ui.jpeg
-
-Status:
-UI PREP
-
-Notes:
-VS Code opened.
-Explorer structure verified.
-
----
-
-### VLA-003
-File:
-checkpoint_003_logic.jpeg
-
-Status:
-MODULE DESIGN
-
-Notes:
-Modules initialized:
-
-- cs50
-- debug
-- githelper
-- jaglotl
-- readme
-- vla
-
-Prompt templates prepared.
-
----
-
-## INDEX STORY
-
-Phase 0:
-Idea
-
-Phase 1:
-PowerShell root creation
-
-Phase 2:
-tree /f verification
-
-Phase 3:
-code .
-
-Phase 4:
-VLA indexing
-
-Phase 5:
-CS50 chatbot build
-
-Phase 6:
-Tutor memory
-
-Phase 7:
-Deployment
-
----
-
-Next Target:
-
-VLA-004
-checkpoint_004_terminal_awakened.jpeg
-
-VLA-005
-checkpoint_005_code_dot_unlock.jpeg
-
-VLA-006
-checkpoint_006_chatbot_birth.jpeg
-
-## VLA-033 - OpenAI SDK First Contact
-
-Date: 2026-05-29
-
-Location:
-D:\Projects\chat\chat.py
-
-Purpose:
-Validate Python + OpenAI SDK connectivity before integration into VAXINXBOT.
-
-Result:
-First successful GPT response received.
-
-Future Integration:
-Target project:
-D:\Projects\VAXINXBOT
-
-Status:
-COMPLETE
-
-## checkpoint_034_cs50_syllabus
-
-Captured official CS50x 2026 syllabus.
-
-Topics:
-- Scratch
-- C
-- Arrays
-- Algorithms
-- Memory
-- Data Structures
-- Python
-- SQL
-- HTML/CSS/JavaScript
-- Flask
-- AI
-
-Purpose:
-Learning roadmap for VAXINXBOT.
-
-## checkpoint_035_cs50_final_project
-
-Captured final project requirements.
-
-Key Insight:
-
-The final project may be any software project
-that applies concepts learned throughout CS50.
-
-Potential Candidate:
-
-- VAXINXBOT
-- Jaglotl Browser RPG
-- VAXINX Password Analyzer
-- VAXINX Stoplight Scanner
-
-## checkpoint_036_scratch_network_ban.png
-
-Event:
-Scratch access blocked.
-
-Outcome:
-Project development continued locally.
-
-Lesson:
-Tools may fail.
-Learning continues.
-
-## checkpoint_037_cs50_vault_published.png
-
-First public deployment of
-VAXINXBOT-CS50-ENGINEERING-VAULT.
-
-Repository contains:
-- CS50 study journey
-- Visual Learning Archives
-- VAXINXBOT chatbot project
-- Prompt engineering workflows
-- GitHub engineering documentation
-
-Status:
-ONLINE
-PUBLIC
 ACTIVE DEVELOPMENT
 
-## checkpoint_038_cs50_vault_appeal.png
-Title: Scratch Appeal Submitted
+---
 
-Summary:
-Submitted formal appeal to Scratch Team regarding network block.
-Included:
-- Scratch username
-- edX CS50x profile
-- GitHub repository
-- Educational use explanation
+## ENGINEERING EVOLUTION
+
+```text
+VAXINXBOT
+│
+├── PHASE 001
+│   └── VLA-001 Root Creation
+│
+├── PHASE 002
+│   └── VLA-002 UI Preparation
+│
+├── PHASE 003
+│   └── VLA-003 Module Architecture
+│
+├── PHASE 004
+│   └── VLA-004 Terminal Awakened
+│
+├── PHASE 005
+│   └── VLA-005 VS Code Unlock
+│
+├── PHASE 006
+│   └── VLA-006 CS50 First Contact
+│
+├── PHASE 007
+│   └── VLA-007 Theme Engine
+│       ├── Tokyo Night
+│       ├── Matrix Green
+│       └── Dracula Moon
+│
+├── PHASE 008
+│   └── VLA-008 Workspace Foundations
+│       │
+│       ├── Font Engine
+│       │   ├── Coding
+│       │   ├── Terminal
+│       │   └── Reading
+│       │
+│       ├── Chat Types
+│       │   ├── Normal
+│       │   ├── Markdown
+│       │   ├── Concise
+│       │   └── Explain
+│       │
+│       └── Preset Engine
+│           ├── Tokyo
+│           ├── Matrix
+│           └── Dracula
+│
+├── PHASE 009
+│   └── VLA-009 Workspace Intelligence
+│       │
+│       ├── Skill Engine
+│       │   ├── CS50
+│       │   ├── PowerShell
+│       │   ├── Bash
+│       │   ├── Git
+│       │   ├── HTML
+│       │   ├── CSS
+│       │   ├── JavaScript
+│       │   ├── Python
+│       │   ├── SQL
+│       │   └── Node.js
+│       │
+│       ├── Skill Persistence
+│       ├── Skill Cheat Sheets
+│       ├── Workspace Presets
+│       └── Summary Integration
+│
+├── PHASE 010
+│   └── Knowledge Engine
+│       ├── PDF Summary
+│       ├── Markdown Summary
+│       ├── Quiz Generator
+│       ├── Lesson Notes
+│       └── Study Companion
+│
+└── FUTURE
+    ├── OpenAI Provider
+    ├── Claude Provider
+    ├── MCP Layer
+    ├── React Migration
+    └── Engineering Workstation v1.0
+```
+
+---
+
+## ADVANCED CHECKPOINTS
+
+```text
+VLA-033 OpenAI SDK First Contact
+VLA-034 CS50 Syllabus Capture
+VLA-035 CS50 Final Project Research
+VLA-036 Scratch Restriction Event
+VLA-037 Engineering Vault Published
+VLA-038 Scratch Appeal Submitted
+VLA-039 Problem Set 0 Submitted
+```
+
+---
+
+## DOCUMENTATION CORE
+
+```text
+docs/
+│
+├── ARCHITECTURE.md
+├── BOT_MEMORY.md
+├── ENGINEERING_WORKFLOW.md
+├── IMPLEMENTATION_REGISTRY.md
+├── CHANGELOG.md
+├── SKILLS.md
+├── ROADMAP.md
+└── USER_GUIDE.md
+```
+
+---
+
+## WORKFLOW
+
+```text
+Idea
+↓
+Architecture
+↓
+Implementation_xxx.md
+↓
+AI Implementation
+↓
+Code Patch
+↓
+Testing
+↓
+VLA Capture
+↓
+CHANGELOG
+↓
+IMPLEMENTATION_REGISTRY
+↓
+Push.bat
+↓
+GitHub
+```
+
+---
+
+## VAXINXBOT PRINCIPLE
+
+```text
+Markdown
+    ↓
+Specification
+
+Code
+    ↓
+Implementation
+
+VLA
+    ↓
+Evidence
+
+GitHub
+    ↓
+Archive
+```
+
+---
 
 Status:
-UNDER REVIEW
 
-## checkpoint_039_cs50_pset0_submitted.png
+LOCKED
 
-Title:
-Problem Set 0 Submitted
+Version:
 
-Summary:
-Successfully submitted CS50x Problem Set 0.
-
-Included:
-- Scratch project submission
-- Problem Set 0 registration form
-- GitHub account integration
-- Public engineering vault
-- Scratch appeal documentation
-
-Status:
-SUBMITTED
-COMPLETE
-AWAITING REVIEW
+VLA Index v2
