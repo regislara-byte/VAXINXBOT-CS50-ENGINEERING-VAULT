@@ -17,7 +17,7 @@ A local-first engineering companion designed to support:
 
 ---
 
-# Philosophy
+## Philosophy
 
 Learn
 → Build
@@ -28,7 +28,7 @@ Learn
 
 ---
 
-# Current Architecture
+## Current Architecture
 
 ```text
 VAXINXBOT/
@@ -63,7 +63,7 @@ VAXINXBOT/
 
 ---
 
-# Layer Model
+## Layer Model
 
 Layer 1
 
@@ -202,7 +202,7 @@ Replace monolithic app.js architecture.
 
 ---
 
-# Implementation Registry
+## Implementation Registry
 
 ```text
 001 Foundation UI            ✅
@@ -223,7 +223,7 @@ Replace monolithic app.js architecture.
 
 ---
 
-# Engineering Rule
+## Engineering Rule
 
 Do not build features randomly.
 
@@ -247,7 +247,7 @@ React
 
 ---
 
-# Final Vision
+## Final Vision
 
 VAXINXBOT
 
