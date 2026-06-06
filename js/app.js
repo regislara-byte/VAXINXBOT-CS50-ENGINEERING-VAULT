@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════
-   CS50-CHATBOT-001 · app.js  v0.5
-   Phase: Typography + Chat Type + Preset Engine
+   CS50-CHATBOT-001 · app.js  v0.7
+   Phase: Knowledge Engine — /notes /quiz /lesson /teach
    Build → Test → Document → Deploy
 ═══════════════════════════════════════════════════════ */
 
@@ -15,6 +15,7 @@ const KEYS = {
   theme:       'cs50bot_theme',
   font:        'cs50bot_font',
   chatType:    'cs50bot_chatType',
+  skill:       'cs50bot_skill',
 };
 
 /* ── STATE ───────────────────────────────────────────── */
@@ -26,6 +27,7 @@ const state = {
   theme:       'dark',
   font:        'coding',
   chatType:    'normal',
+  skill:       'cs50',
 };
 
 /* ── DOM REFS ────────────────────────────────────────── */
@@ -89,6 +91,7 @@ const saveMode        = () => store.set(KEYS.activeMode,  state.mode);
 const saveTheme       = () => store.set(KEYS.theme,       state.theme);
 const saveFont        = () => store.set(KEYS.font,        state.font);
 const saveChatType    = () => store.set(KEYS.chatType,    state.chatType);
+const saveSkill       = () => store.set(KEYS.skill,       state.skill);
 
 function loadAll() {
   state.messages    = store.get(KEYS.messages,    []);
@@ -98,6 +101,7 @@ function loadAll() {
   state.theme       = store.get(KEYS.theme,       'dark');
   state.font        = store.get(KEYS.font,        'coding');
   state.chatType    = store.get(KEYS.chatType,    'normal');
+  state.skill       = store.get(KEYS.skill,       'cs50');
 }
 
 /* ══════════════════════════════════════════════════════
@@ -214,10 +218,19 @@ const SLASH_HELP = `**Slash Commands**
 \`/theme\`          — list themes (dark · focus · soft)
 \`/font\`           — list fonts (coding · terminal · reading)
 \`/chat\`           — list chat types (normal · md · concise · explain)
-\`/preset\`         — list presets (tokyo · matrix · dracula)
+\`/preset\`         — list presets (tokyo · matrix · dracula · engineer · developer · student)
+\`/skill\`          — list skills (cs50 · powershell · bash · git · html · css · javascript · python · sql · node)
 \`/clear\`          — clear chat history
 \`/export\`         — export notes + chat to .txt
 \`/summary\`        — show memory & project status
+
+**Knowledge Engine:**
+\`/notes <topic>\`  — generate study notes
+\`/quiz <topic>\`   — generate quiz questions
+\`/lesson <topic>\` — step-by-step lesson walkthrough
+\`/teach <topic>\`  — enter guided tutor mode
+
+**Topics:** cs50 · javascript · python · html · css · git · sql · powershell · node · bash
 
 **Mode switches:**
 \`/cs50\` · \`/readme\` · \`/vla\` · \`/debug\` · \`/git\`
@@ -285,28 +298,74 @@ function handleSlash(input) {
   if (cmd === '/chat concise') { applyChatType('concise'); return '> Chat type switched to: **concise**'; }
   if (cmd === '/chat explain') { applyChatType('explain'); return '> Chat type switched to: **explain**'; }
 
+  // ── SKILL ────────────────────────────────────────────
+  if (cmd === '/skill') {
+    const cur = SKILLS[state.skill]?.label || 'CS50';
+    const byCategory = {};
+    for (const [key, s] of Object.entries(SKILLS)) {
+      if (!byCategory[s.category]) byCategory[s.category] = [];
+      byCategory[s.category].push(`\`/skill ${key}\` — ${s.desc}`);
+    }
+    const lines = Object.entries(byCategory)
+      .map(([cat, items]) => `**${cat}**\n${items.join('\n')}`)
+      .join('\n\n');
+    return `**Available Skills** *(current: ${cur})*\n\n${lines}`;
+  }
+  for (const key of SKILL_KEYS) {
+    if (cmd === `/skill ${key}`) {
+      applySkill(key);
+      return skillCheatSheet(key);
+    }
+  }
+
   // ── PRESETS ──────────────────────────────────────────
   if (cmd === '/preset') {
     return `**Available Presets**
 
-🌃 \`/preset tokyo\`   — **${PRESETS.tokyo.label}** · ${PRESETS.tokyo.desc}
-     theme: dark · font: coding · chat: normal
-🟢 \`/preset matrix\`  — **${PRESETS.matrix.label}** · ${PRESETS.matrix.desc}
-     theme: focus · font: terminal · chat: concise
-🟣 \`/preset dracula\` — **${PRESETS.dracula.label}** · ${PRESETS.dracula.desc}
-     theme: soft · font: reading · chat: md`;
+🌃 \`/preset tokyo\`    — **${PRESETS.tokyo.label}** · ${PRESETS.tokyo.desc}
+     theme: dark · font: coding · chat: normal · skill: javascript
+🟢 \`/preset matrix\`   — **${PRESETS.matrix.label}** · ${PRESETS.matrix.desc}
+     theme: focus · font: terminal · chat: concise · skill: powershell
+🟣 \`/preset dracula\`  — **${PRESETS.dracula.label}** · ${PRESETS.dracula.desc}
+     theme: soft · font: reading · chat: md · skill: cs50
+⚙️  \`/preset engineer\` — **${PRESETS.engineer.label}** · ${PRESETS.engineer.desc}
+     theme: focus · font: terminal · chat: concise · skill: powershell
+💻 \`/preset developer\`— **${PRESETS.developer.label}** · ${PRESETS.developer.desc}
+     theme: dark · font: coding · chat: normal · skill: javascript
+🎓 \`/preset student\`  — **${PRESETS.student.label}** · ${PRESETS.student.desc}
+     theme: soft · font: reading · chat: explain · skill: cs50`;
   }
-  if (cmd === '/preset tokyo') {
-    applyPreset('tokyo');
-    return '> Preset activated: **tokyo** — Tokyo Night · VS Code Development Mode';
+  if (cmd === '/preset tokyo')    { applyPreset('tokyo');    return '> Preset activated: **tokyo** — Tokyo Night · VS Code Development Mode'; }
+  if (cmd === '/preset matrix')   { applyPreset('matrix');   return '> Preset activated: **matrix** — Matrix Green · Terminal Engineering Mode'; }
+  if (cmd === '/preset dracula')  { applyPreset('dracula');  return '> Preset activated: **dracula** — Dracula Moon · Study & Documentation Mode'; }
+  if (cmd === '/preset engineer') { applyPreset('engineer'); return '> Preset activated: **engineer** — Systems Engineering Mode'; }
+  if (cmd === '/preset developer'){ applyPreset('developer');return '> Preset activated: **developer** — Full-Stack Development Mode'; }
+  if (cmd === '/preset student')  { applyPreset('student');  return '> Preset activated: **student** — CS50 Learning Mode'; }
+
+  // ── KNOWLEDGE ENGINE ─────────────────────────────────
+  if (cmd === '/notes' || cmd.startsWith('/notes ')) {
+    const topic = input.trim().slice(6).trim() || state.skill;
+    if (typeof knowledgeEngine === 'undefined')
+      return '> Knowledge Engine not loaded. Ensure `knowledge/engine/knowledge-engine.js` is included in `index.html`.';
+    return knowledgeEngine.generateNotes(topic);
   }
-  if (cmd === '/preset matrix') {
-    applyPreset('matrix');
-    return '> Preset activated: **matrix** — Matrix Green · Terminal Engineering Mode';
+  if (cmd === '/quiz' || cmd.startsWith('/quiz ')) {
+    const topic = input.trim().slice(5).trim() || state.skill;
+    if (typeof knowledgeEngine === 'undefined')
+      return '> Knowledge Engine not loaded.';
+    return knowledgeEngine.generateQuiz(topic);
   }
-  if (cmd === '/preset dracula') {
-    applyPreset('dracula');
-    return '> Preset activated: **dracula** — Dracula Moon · Study & Documentation Mode';
+  if (cmd === '/lesson' || cmd.startsWith('/lesson ')) {
+    const topic = input.trim().slice(7).trim() || state.skill;
+    if (typeof knowledgeEngine === 'undefined')
+      return '> Knowledge Engine not loaded.';
+    return knowledgeEngine.generateLesson(topic);
+  }
+  if (cmd === '/teach' || cmd.startsWith('/teach ')) {
+    const topic = input.trim().slice(6).trim() || state.skill;
+    if (typeof knowledgeEngine === 'undefined')
+      return '> Knowledge Engine not loaded.';
+    return knowledgeEngine.tutorMode(topic);
   }
 
   // ── UTILS ────────────────────────────────────────────
@@ -335,10 +394,11 @@ function buildSummary() {
   const cpSeen    = Object.keys(state.checkpoints).length;
   const totalCp   = Object.keys(VLA_META).length;
 
-  // Detect active preset
+  // Detect active preset (now includes skill matching)
   let activePreset = '—';
   for (const [key, p] of Object.entries(PRESETS)) {
-    if (p.theme === state.theme && p.font === state.font && p.chatType === state.chatType) {
+    if (p.theme === state.theme && p.font === state.font &&
+        p.chatType === state.chatType && p.skill === state.skill) {
       activePreset = key;
       break;
     }
@@ -348,14 +408,16 @@ function buildSummary() {
 
 \`\`\`
 Project   : CS50-CHATBOT-001
-Version   : v0.5
+Version   : v0.7
 ─────────────────────────────
 Mode      : ${(MODES[state.mode] || {label:'?'}).label}
 Theme     : ${THEME_MODES[state.theme]?.label || state.theme}
 Font      : ${FONT_PROFILES[state.font]?.label || state.font}
 Chat Type : ${CHAT_TYPES[state.chatType]?.label || state.chatType}
 Preset    : ${activePreset}
+Skill     : ${SKILLS[state.skill]?.label || state.skill}
 ─────────────────────────────
+Knowledge : /notes · /quiz · /lesson · /teach
 Messages  : ${msgCount}
 Notes     : ${noteState}
 Checkpoints seen : ${cpSeen} / ${totalCp}
@@ -919,6 +981,208 @@ function applyChatType(type) {
 }
 
 /* ══════════════════════════════════════════════════════
+   SKILL ENGINE
+══════════════════════════════════════════════════════ */
+
+const SKILLS = {
+  cs50: {
+    label:    'CS50',
+    category: 'Learning',
+    desc:     'Course guidance — algorithms, memory, problem solving.',
+    focus:    ['Algorithms', 'Data Structures', 'Memory', 'Problem Solving'],
+    shortcuts: [
+      '`help50`       — CS50 debug helper',
+      '`debug50`      — step-through debugger',
+      '`valgrind`     — memory leak checker',
+      '`style50`      — code style checker',
+      '`check50`      — automated pset checker',
+      '`submit50`     — submit pset',
+    ],
+  },
+  powershell: {
+    label:    'PowerShell',
+    category: 'Engineering',
+    desc:     'Windows automation — folders, scripts, VS Code workflow.',
+    focus:    ['Folders', 'VS Code', 'Scripts', 'Automation'],
+    shortcuts: [
+      '`Get-Location`       — print working directory (pwd)',
+      '`Set-Location`       — change directory (cd)',
+      '`Get-ChildItem`      — list files (ls / dir)',
+      '`New-Item`           — create file or folder',
+      '`Remove-Item`        — delete file or folder',
+      '`code .`             — open VS Code in current folder',
+      '`Get-Content`        — read file (cat)',
+      '`Select-String`      — search in files (grep)',
+    ],
+  },
+  bash: {
+    label:    'Bash',
+    category: 'Engineering',
+    desc:     'Linux shell — commands, permissions, automation.',
+    focus:    ['Commands', 'Permissions', 'Automation'],
+    shortcuts: [
+      '`pwd`              — print working directory',
+      '`ls -la`           — list all files with permissions',
+      '`cd folder`        — change directory',
+      '`mkdir name`       — make directory',
+      '`rm -rf folder`    — remove directory',
+      '`chmod +x file`    — make file executable',
+      '`cat file`         — print file contents',
+      '`grep "text" file` — search in file',
+      '`./script.sh`      — run shell script',
+    ],
+  },
+  git: {
+    label:    'Git',
+    category: 'Engineering',
+    desc:     'Version control — clone, commit, push, branch, merge.',
+    focus:    ['Clone', 'Commit', 'Push', 'Branch', 'Merge'],
+    shortcuts: [
+      '`git init`             — initialize repo',
+      '`git clone <url>`      — clone remote repo',
+      '`git add .`            — stage all changes',
+      '`git commit -m "msg"`  — commit staged changes',
+      '`git push`             — push to remote',
+      '`git pull`             — pull latest from remote',
+      '`git branch name`      — create branch',
+      '`git checkout name`    — switch branch',
+      '`git merge name`       — merge branch',
+      '`git log --oneline`    — view commit history',
+      '`git status`           — view working state',
+    ],
+  },
+  html: {
+    label:    'HTML',
+    category: 'Web Development',
+    desc:     'Web structure — semantic HTML, accessibility, layout.',
+    focus:    ['Semantic HTML', 'Accessibility', 'Layout'],
+    shortcuts: [
+      '`<!DOCTYPE html>`    — document declaration',
+      '`<html lang="en">`   — root element',
+      '`<meta charset>`     — character encoding',
+      '`<main>` `<nav>` `<section>` `<article>` — semantic elements',
+      '`alt=""` on images   — accessibility',
+      '`<label for="">`     — form accessibility',
+      '`<a href="">`        — hyperlink',
+      '`<form method="post">` — form submission',
+    ],
+  },
+  css: {
+    label:    'CSS',
+    category: 'Web Development',
+    desc:     'Visual styling — Flexbox, Grid, responsive design.',
+    focus:    ['Flexbox', 'Grid', 'Responsive Design'],
+    shortcuts: [
+      '`display: flex`            — enable flexbox',
+      '`justify-content: center`  — horizontal align',
+      '`align-items: center`      — vertical align',
+      '`gap: 16px`                — spacing between flex items',
+      '`display: grid`            — enable grid',
+      '`grid-template-columns`    — define columns',
+      '`@media (max-width: 600px)` — mobile breakpoint',
+      '`:root { --var: value }`   — CSS variables',
+      '`box-shadow` `border-radius` `transition` — polish',
+    ],
+  },
+  javascript: {
+    label:    'JavaScript',
+    category: 'Web Development',
+    desc:     'Frontend logic — DOM, events, localStorage, modules.',
+    focus:    ['DOM', 'Events', 'localStorage', 'Modules'],
+    shortcuts: [
+      '`document.querySelector()`   — select element',
+      '`element.addEventListener()` — attach event',
+      '`element.textContent`        — set text',
+      '`element.innerHTML`          — set HTML',
+      '`localStorage.setItem()`     — store data',
+      '`localStorage.getItem()`     — read data',
+      '`fetch(url).then()`          — HTTP request',
+      '`JSON.stringify()` / `JSON.parse()` — serialize data',
+      '`async / await`              — async pattern',
+    ],
+  },
+  python: {
+    label:    'Python',
+    category: 'Programming',
+    desc:     'Automation and scripting — files, parsing, cybersecurity tools.',
+    focus:    ['Files', 'Parsing', 'Automation', 'Cybersecurity Tools'],
+    shortcuts: [
+      '`python3 file.py`       — run script',
+      '`pip install package`   — install package',
+      '`open("file", "r")`     — read file',
+      '`open("file", "w")`     — write file',
+      '`import sys`            — system args',
+      '`import os`             — OS operations',
+      '`import re`             — regex',
+      '`import csv`            — CSV parsing',
+      '`if __name__ == "__main__":` — entry point',
+    ],
+  },
+  sql: {
+    label:    'SQL',
+    category: 'Programming',
+    desc:     'Data management — queries, filters, joins, aggregations.',
+    focus:    ['Queries', 'Filters', 'Joins', 'Aggregations'],
+    shortcuts: [
+      '`SELECT * FROM table`               — select all',
+      '`WHERE column = value`              — filter rows',
+      '`ORDER BY column DESC`              — sort',
+      '`LIMIT 10`                          — limit results',
+      '`JOIN table ON col = col`           — join tables',
+      '`COUNT(*) GROUP BY column`          — aggregate',
+      '`INSERT INTO table (col) VALUES (?)`— insert row',
+      '`UPDATE table SET col = ? WHERE id = ?` — update',
+      '`DELETE FROM table WHERE id = ?`    — delete',
+    ],
+  },
+  node: {
+    label:    'Node.js',
+    category: 'Engineering',
+    desc:     'Backend JavaScript — npm, packages, Express, servers.',
+    focus:    ['npm', 'Packages', 'Express', 'Servers'],
+    shortcuts: [
+      '`node file.js`          — run script',
+      '`npm init -y`           — init package.json',
+      '`npm install package`   — install package',
+      '`npm run dev`           — run dev script',
+      '`require("module")`     — CommonJS import',
+      '`import x from "mod"`   — ES Module import',
+      '`process.env.VAR`       — environment variable',
+      '`express()`             — create Express app',
+      '`app.listen(3000)`      — start server',
+    ],
+  },
+};
+
+const SKILL_KEYS = Object.keys(SKILLS);
+
+function applySkill(skill) {
+  if (!SKILLS[skill]) return;
+  state.skill = skill;
+  saveSkill();
+  document.body.classList.remove(...SKILL_KEYS.map(k => `skill-${k}`));
+  document.body.classList.add(`skill-${skill}`);
+}
+
+function skillCheatSheet(skill) {
+  const s = SKILLS[skill];
+  if (!s) return `> Unknown skill: \`${skill}\`. Type \`/skill\` to see all options.`;
+  const shortcuts = s.shortcuts.map(sc => `  ${sc}`).join('\n');
+  return `**Skill: ${s.label}** · ${s.category}
+
+${s.desc}
+
+**Focus:** ${s.focus.join(' · ')}
+
+**Cheat Sheet:**
+\`\`\`
+${shortcuts}
+\`\`\`
+
+Skill active. Type a question or command to continue.`;
+}
+
+/* ══════════════════════════════════════════════════════
    PRESET ENGINE
 ══════════════════════════════════════════════════════ */
 
@@ -929,6 +1193,7 @@ const PRESETS = {
     theme:    'dark',
     font:     'coding',
     chatType: 'normal',
+    skill:    'javascript',
   },
   matrix: {
     label:    'Matrix Green',
@@ -936,6 +1201,7 @@ const PRESETS = {
     theme:    'focus',
     font:     'terminal',
     chatType: 'concise',
+    skill:    'powershell',
   },
   dracula: {
     label:    'Dracula Moon',
@@ -943,6 +1209,31 @@ const PRESETS = {
     theme:    'soft',
     font:     'reading',
     chatType: 'md',
+    skill:    'cs50',
+  },
+  engineer: {
+    label:    'Engineer',
+    desc:     'Systems Engineering Mode',
+    theme:    'focus',
+    font:     'terminal',
+    chatType: 'concise',
+    skill:    'powershell',
+  },
+  developer: {
+    label:    'Developer',
+    desc:     'Full-Stack Development Mode',
+    theme:    'dark',
+    font:     'coding',
+    chatType: 'normal',
+    skill:    'javascript',
+  },
+  student: {
+    label:    'Student',
+    desc:     'CS50 Learning Mode',
+    theme:    'soft',
+    font:     'reading',
+    chatType: 'explain',
+    skill:    'cs50',
   },
 };
 
@@ -952,6 +1243,7 @@ function applyPreset(name) {
   applyTheme(preset.theme);
   applyFont(preset.font);
   applyChatType(preset.chatType);
+  applySkill(preset.skill);
   return preset;
 }
 
@@ -1887,6 +2179,7 @@ function boot() {
   injectFontStyles();
   applyFont(state.font);
   applyChatType(state.chatType);
+  applySkill(state.skill);
   setMode(state.mode);
 
   // Randomize boot greeting inside existing .msg--boot block
@@ -1899,7 +2192,7 @@ function boot() {
   restoreNote();
   bindEvents();
   scrollToBottom();
-  console.log('[CS50-CHATBOT-001 v0.5] boot · mode:', state.mode, '· theme:', state.theme, '· font:', state.font, '· chat:', state.chatType);
+  console.log('[CS50-CHATBOT-001 v0.7] boot · mode:', state.mode, '· theme:', state.theme, '· font:', state.font, '· chat:', state.chatType, '· skill:', state.skill);
 }
 
 document.addEventListener('DOMContentLoaded', boot);
