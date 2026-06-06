@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════
-   CS50-CHATBOT-001 · app.js  v0.2
-   Phase: Upgraded Interaction + Smart Responses
+   CS50-CHATBOT-001 · app.js  v0.5
+   Phase: Typography + Chat Type + Preset Engine
    Build → Test → Document → Deploy
 ═══════════════════════════════════════════════════════ */
 
@@ -13,6 +13,8 @@ const KEYS = {
   checkpoints: 'cs50bot_checkpoints',
   activeMode:  'cs50bot_activeMode',
   theme:       'cs50bot_theme',
+  font:        'cs50bot_font',
+  chatType:    'cs50bot_chatType',
 };
 
 /* ── STATE ───────────────────────────────────────────── */
@@ -22,6 +24,8 @@ const state = {
   notes:       '',
   checkpoints: {},
   theme:       'dark',
+  font:        'coding',
+  chatType:    'normal',
 };
 
 /* ── DOM REFS ────────────────────────────────────────── */
@@ -83,6 +87,8 @@ const saveNotes       = () => store.set(KEYS.notes,       state.notes);
 const saveCheckpoints = () => store.set(KEYS.checkpoints, state.checkpoints);
 const saveMode        = () => store.set(KEYS.activeMode,  state.mode);
 const saveTheme       = () => store.set(KEYS.theme,       state.theme);
+const saveFont        = () => store.set(KEYS.font,        state.font);
+const saveChatType    = () => store.set(KEYS.chatType,    state.chatType);
 
 function loadAll() {
   state.messages    = store.get(KEYS.messages,    []);
@@ -90,6 +96,8 @@ function loadAll() {
   state.checkpoints = store.get(KEYS.checkpoints, {});
   state.mode        = store.get(KEYS.activeMode,  'cs50');
   state.theme       = store.get(KEYS.theme,       'dark');
+  state.font        = store.get(KEYS.font,        'coding');
+  state.chatType    = store.get(KEYS.chatType,    'normal');
 }
 
 /* ══════════════════════════════════════════════════════
@@ -201,20 +209,18 @@ function applyTheme(theme) {
 ══════════════════════════════════════════════════════ */
 const SLASH_HELP = `**Slash Commands**
 
-\`/help\`        — show this command list
-\`/modes\`       — list all available modes
-\`/theme\`       — list available themes
-\`/theme dark\`  — default dark shell
-\`/theme focus\` — reduced distraction mode
-\`/theme soft\`  — warm companion mode
-\`/clear\`       — clear chat history
-\`/export\`      — export notes + chat to .txt
-\`/summary\`     — show memory & project status
-\`/vla\`         — switch to VLA mode
-\`/git\`         — switch to Git mode
-\`/readme\`      — switch to README mode
-\`/debug\`       — switch to Debug mode
-\`/cs50\`        — switch to CS50 mode
+\`/help\`           — show this command list
+\`/modes\`          — list all available modes
+\`/theme\`          — list themes (dark · focus · soft)
+\`/font\`           — list fonts (coding · terminal · reading)
+\`/chat\`           — list chat types (normal · md · concise · explain)
+\`/preset\`         — list presets (tokyo · matrix · dracula)
+\`/clear\`          — clear chat history
+\`/export\`         — export notes + chat to .txt
+\`/summary\`        — show memory & project status
+
+**Mode switches:**
+\`/cs50\` · \`/readme\` · \`/vla\` · \`/debug\` · \`/git\`
 
 **Tips:**
 - Press **F1–F5** to switch modes instantly
@@ -234,11 +240,11 @@ Switch by clicking the mode button or typing \`/modename\`.`;
 function handleSlash(input) {
   const cmd = input.trim().toLowerCase();
 
-  if (cmd === '/help')   return SLASH_HELP;
-  if (cmd === '/modes')  return SLASH_MODES;
+  if (cmd === '/help')    return SLASH_HELP;
+  if (cmd === '/modes')   return SLASH_MODES;
   if (cmd === '/summary') return buildSummary();
 
-  // Theme commands
+  // ── THEME ───────────────────────────────────────────
   if (cmd === '/theme') {
     const current = THEME_MODES[state.theme]?.label || 'Dark';
     return `**Available Themes** *(current: ${current})*
@@ -251,6 +257,59 @@ function handleSlash(input) {
   if (cmd === '/theme focus') { applyTheme('focus'); return '> Theme switched to: **focus**'; }
   if (cmd === '/theme soft')  { applyTheme('soft');  return '> Theme switched to: **soft**'; }
 
+  // ── FONT ────────────────────────────────────────────
+  if (cmd === '/font') {
+    const cur = FONT_PROFILES[state.font]?.label || 'Coding';
+    return `**Available Fonts** *(current: ${cur})*
+
+⌨️  \`/font coding\`   — ${FONT_PROFILES.coding.desc}
+💻 \`/font terminal\` — ${FONT_PROFILES.terminal.desc}
+📖 \`/font reading\`  — ${FONT_PROFILES.reading.desc}`;
+  }
+  if (cmd === '/font coding')   { applyFont('coding');   return '> Font switched to: **coding**'; }
+  if (cmd === '/font terminal') { applyFont('terminal'); return '> Font switched to: **terminal**'; }
+  if (cmd === '/font reading')  { applyFont('reading');  return '> Font switched to: **reading**'; }
+
+  // ── CHAT TYPE ────────────────────────────────────────
+  if (cmd === '/chat') {
+    const cur = CHAT_TYPES[state.chatType]?.label || 'Normal';
+    return `**Available Chat Types** *(current: ${cur})*
+
+💬 \`/chat normal\`  — ${CHAT_TYPES.normal.desc}
+📝 \`/chat md\`      — ${CHAT_TYPES.md.desc}
+⚡ \`/chat concise\` — ${CHAT_TYPES.concise.desc}
+🎓 \`/chat explain\` — ${CHAT_TYPES.explain.desc}`;
+  }
+  if (cmd === '/chat normal')  { applyChatType('normal');  return '> Chat type switched to: **normal**'; }
+  if (cmd === '/chat md')      { applyChatType('md');      return '> Chat type switched to: **md**'; }
+  if (cmd === '/chat concise') { applyChatType('concise'); return '> Chat type switched to: **concise**'; }
+  if (cmd === '/chat explain') { applyChatType('explain'); return '> Chat type switched to: **explain**'; }
+
+  // ── PRESETS ──────────────────────────────────────────
+  if (cmd === '/preset') {
+    return `**Available Presets**
+
+🌃 \`/preset tokyo\`   — **${PRESETS.tokyo.label}** · ${PRESETS.tokyo.desc}
+     theme: dark · font: coding · chat: normal
+🟢 \`/preset matrix\`  — **${PRESETS.matrix.label}** · ${PRESETS.matrix.desc}
+     theme: focus · font: terminal · chat: concise
+🟣 \`/preset dracula\` — **${PRESETS.dracula.label}** · ${PRESETS.dracula.desc}
+     theme: soft · font: reading · chat: md`;
+  }
+  if (cmd === '/preset tokyo') {
+    applyPreset('tokyo');
+    return '> Preset activated: **tokyo** — Tokyo Night · VS Code Development Mode';
+  }
+  if (cmd === '/preset matrix') {
+    applyPreset('matrix');
+    return '> Preset activated: **matrix** — Matrix Green · Terminal Engineering Mode';
+  }
+  if (cmd === '/preset dracula') {
+    applyPreset('dracula');
+    return '> Preset activated: **dracula** — Dracula Moon · Study & Documentation Mode';
+  }
+
+  // ── UTILS ────────────────────────────────────────────
   if (cmd === '/clear') {
     setTimeout(clearChat, 100);
     return '> Chat cleared.';
@@ -276,19 +335,33 @@ function buildSummary() {
   const cpSeen    = Object.keys(state.checkpoints).length;
   const totalCp   = Object.keys(VLA_META).length;
 
+  // Detect active preset
+  let activePreset = '—';
+  for (const [key, p] of Object.entries(PRESETS)) {
+    if (p.theme === state.theme && p.font === state.font && p.chatType === state.chatType) {
+      activePreset = key;
+      break;
+    }
+  }
+
   return `**Memory Summary**
 
 \`\`\`
-Project  : CS50-CHATBOT-001
-Version  : v0.2
-Mode     : ${(MODES[state.mode] || {label:'?'}).label}
-─────────────────────────
-Messages : ${msgCount}
-Notes    : ${noteState}
+Project   : CS50-CHATBOT-001
+Version   : v0.5
+─────────────────────────────
+Mode      : ${(MODES[state.mode] || {label:'?'}).label}
+Theme     : ${THEME_MODES[state.theme]?.label || state.theme}
+Font      : ${FONT_PROFILES[state.font]?.label || state.font}
+Chat Type : ${CHAT_TYPES[state.chatType]?.label || state.chatType}
+Preset    : ${activePreset}
+─────────────────────────────
+Messages  : ${msgCount}
+Notes     : ${noteState}
 Checkpoints seen : ${cpSeen} / ${totalCp}
-Storage  : localStorage (local-first)
-─────────────────────────
-Status   : ACTIVE
+Storage   : localStorage (local-first)
+─────────────────────────────
+Status    : ACTIVE
 \`\`\`
 
 Type \`/help\` to see all commands.`;
@@ -762,6 +835,124 @@ function detectCS50Topic(input) {
     }
   }
   return null;
+}
+
+/* ══════════════════════════════════════════════════════
+   FONT ENGINE
+══════════════════════════════════════════════════════ */
+
+const FONT_PROFILES = {
+  coding: {
+    label:  'Coding',
+    desc:   'JetBrains Mono — clear 0/O/1/l/I disambiguation. Best for CS50, HTML, JS.',
+    family: '"JetBrains Mono", "Fira Code", monospace',
+    mono:   '"JetBrains Mono", "Fira Code", monospace',
+  },
+  terminal: {
+    label:  'Terminal',
+    desc:   'Cascadia Code / Fira Code — PowerShell, Git, Bash, Matrix workspace.',
+    family: '"Cascadia Code", "Fira Code", "Consolas", monospace',
+    mono:   '"Cascadia Code", "Fira Code", monospace',
+  },
+  reading: {
+    label:  'Reading',
+    desc:   'Inter / Segoe UI — CS50 study, README generation, documentation.',
+    family: '"Inter", "Segoe UI", "Helvetica Neue", sans-serif',
+    mono:   '"JetBrains Mono", monospace',
+  },
+  // Reserved: 'Source Code Pro', 'IBM Plex Mono', 'Roboto Mono'
+};
+
+function injectFontStyles() {
+  let tag = document.getElementById('cs50-font-vars');
+  if (!tag) {
+    tag = document.createElement('style');
+    tag.id = 'cs50-font-vars';
+    document.head.appendChild(tag);
+  }
+  const profile = FONT_PROFILES[state.font] || FONT_PROFILES.coding;
+  tag.textContent = `:root {
+  --font-ui:   ${profile.family};
+  --font-mono: ${profile.mono};
+}
+body { font-family: ${profile.family}; }`;
+}
+
+function applyFont(font) {
+  if (!FONT_PROFILES[font]) return;
+  state.font = font;
+  saveFont();
+  document.body.classList.remove('font-coding', 'font-terminal', 'font-reading');
+  document.body.classList.add(`font-${font}`);
+  injectFontStyles();
+}
+
+/* ══════════════════════════════════════════════════════
+   CHAT TYPE ENGINE
+══════════════════════════════════════════════════════ */
+
+const CHAT_TYPES = {
+  normal: {
+    label: 'Normal',
+    desc:  'Balanced replies — friendly, useful, moderate length.',
+  },
+  md: {
+    label: 'Markdown',
+    desc:  'Markdown-first — headings, bullets, fenced code blocks. GitHub-ready.',
+  },
+  concise: {
+    label: 'Concise',
+    desc:  'Fast mode — short answers, command-first, reduced explanation.',
+  },
+  explain: {
+    label: 'Explain',
+    desc:  'Learning mode — step-by-step breakdowns with examples.',
+  },
+};
+
+function applyChatType(type) {
+  if (!CHAT_TYPES[type]) return;
+  state.chatType = type;
+  saveChatType();
+  document.body.classList.remove('chat-normal', 'chat-md', 'chat-concise', 'chat-explain');
+  document.body.classList.add(`chat-${type}`);
+}
+
+/* ══════════════════════════════════════════════════════
+   PRESET ENGINE
+══════════════════════════════════════════════════════ */
+
+const PRESETS = {
+  tokyo: {
+    label:    'Tokyo Night',
+    desc:     'VS Code Development Mode',
+    theme:    'dark',
+    font:     'coding',
+    chatType: 'normal',
+  },
+  matrix: {
+    label:    'Matrix Green',
+    desc:     'Terminal Engineering Mode',
+    theme:    'focus',
+    font:     'terminal',
+    chatType: 'concise',
+  },
+  dracula: {
+    label:    'Dracula Moon',
+    desc:     'Study & Documentation Mode',
+    theme:    'soft',
+    font:     'reading',
+    chatType: 'md',
+  },
+};
+
+function applyPreset(name) {
+  const preset = PRESETS[name];
+  if (!preset) return null;
+  applyTheme(preset.theme);
+  applyFont(preset.font);
+  applyChatType(preset.chatType);
+  return preset;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -1693,6 +1884,9 @@ function boot() {
   loadAll();
   injectThemeStyles();
   applyTheme(state.theme);
+  injectFontStyles();
+  applyFont(state.font);
+  applyChatType(state.chatType);
   setMode(state.mode);
 
   // Randomize boot greeting inside existing .msg--boot block
@@ -1705,7 +1899,7 @@ function boot() {
   restoreNote();
   bindEvents();
   scrollToBottom();
-  console.log('[CS50-CHATBOT-001 v0.4] boot · mode:', state.mode, '· theme:', state.theme);
+  console.log('[CS50-CHATBOT-001 v0.5] boot · mode:', state.mode, '· theme:', state.theme, '· font:', state.font, '· chat:', state.chatType);
 }
 
 document.addEventListener('DOMContentLoaded', boot);
