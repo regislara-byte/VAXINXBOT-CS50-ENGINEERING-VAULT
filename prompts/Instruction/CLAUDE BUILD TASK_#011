@@ -1,0 +1,150 @@
+# CLAUDE BUILD TASK
+
+Project:
+VAXINXBOT CS50 Engineering Vault
+
+Current Status:
+VLA-010 LOCKED ✅
+
+Knowledge Engine:
+LIVE
+
+Commands Working:
+
+* /notes
+* /quiz
+* /lesson
+
+GitHub Pages:
+Verified
+
+---
+
+# IMPLEMENTATION 011
+
+Title:
+Document Intake Engine
+
+Goal:
+
+Allow VAXINXBOT to process real files.
+
+Do NOT redesign previous implementations.
+
+Preserve:
+
+* Theme Engine
+* Workspace Intelligence
+* Skill Engine
+* Knowledge Engine
+
+Implementation 011 extends Implementation 010.
+
+---
+
+# TARGET COMMANDS
+
+/pdf
+/md
+/txt
+/docx
+
+Examples:
+
+/pdf lecture0.pdf
+/txt lecture0-720p-en.txt
+/md README.md
+/docx notes.docx
+
+---
+
+# CURRENT TEST FILES
+
+vidlecture/transcripts/
+
+Contains:
+
+* lecture0.pdf
+* lecture1.pdf
+* lecture0-720p-en.txt
+
+Use these as test targets.
+
+---
+
+# PHASE 1 ONLY
+
+Build TXT Intake first.
+
+Required:
+
+/txt lecture0-720p-en.txt
+
+Should generate:
+
+* Summary
+* Key Concepts
+* Notes
+* Quiz Questions
+
+Mock processing is acceptable.
+
+No PDF extraction yet.
+
+No OpenAI API.
+
+No Claude API.
+
+No MCP.
+
+---
+
+# FOLDER TARGET
+
+knowledge/
+│
+├── input/
+├── output/
+├── cache/
+└── engine/
+
+Add only files required for TXT intake.
+
+---
+
+# APP.JS
+
+Add command routing only for:
+
+/txt
+
+Do not modify existing commands.
+
+Existing commands must continue working:
+
+* /notes
+* /quiz
+* /lesson
+
+---
+
+# OUTPUT REQUIRED
+
+Provide:
+
+1. Folder additions
+2. New JS files
+3. Updated app.js integration
+4. TXT processing workflow
+5. Test examples
+6. Commit message
+
+Goal:
+
+Implementation 011
+Phase 1
+
+TXT Intake Engine
+
+No architecture discussion.
+Build only.
