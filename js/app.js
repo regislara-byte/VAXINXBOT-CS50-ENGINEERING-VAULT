@@ -223,6 +223,8 @@ const SLASH_HELP = `**Slash Commands**
 \`/clear\`          — clear chat history
 \`/export\`         — export notes + chat to .txt
 \`/summary\`        — show memory & project status
+\`/outlaw\`         — 🤠 activate Outlaw Engineering Mode
+\`/outlaw off\`     — return to Standard Engineering Mode
 
 **Knowledge Engine:**
 \`/notes <topic>\`  — generate study notes
@@ -384,6 +386,10 @@ function handleSlash(input) {
     setTimeout(() => setMode(modeMap[cmd]), 80);
     return `> Mode switched to **${modeMap[cmd].toUpperCase()}**.`;
   }
+
+  // ── OUTLAW ──────────────────────────────────────────
+  if (cmd === '/outlaw')     { outlaw.enable();  return ''; }
+  if (cmd === '/outlaw off') { outlaw.disable(); return ''; }
 
   return `> Unknown command: \`${input}\`\nType \`/help\` to see all commands.`;
 }
@@ -2192,7 +2198,68 @@ function boot() {
   restoreNote();
   bindEvents();
   scrollToBottom();
+  outlaw.init();
   console.log('[CS50-CHATBOT-001 v0.7] boot · mode:', state.mode, '· theme:', state.theme, '· font:', state.font, '· chat:', state.chatType, '· skill:', state.skill);
 }
+
+/* ══════════════════════════════════════════════════════
+   OUTLAW MODE — IMPLEMENTATION 015
+══════════════════════════════════════════════════════ */
+const OUTLAW_KEY = 'vaxinx_outlaw_mode';
+
+const outlaw = {
+  active: false,
+  audio:  null,
+
+  init() {
+    this.audio = document.getElementById('outlawAudio');
+    const saved = store.get(OUTLAW_KEY, false);
+    if (saved) this._apply(true, true);
+    const btn = document.getElementById('outlawBtn');
+    if (btn) btn.addEventListener('click', () => this.toggle());
+  },
+
+  toggle() { this._apply(!this.active, false); },
+  enable(silent = false)  { this._apply(true,  silent); },
+  disable(silent = false) { this._apply(false, silent); },
+
+  _apply(on, silent) {
+    this.active = on;
+    store.set(OUTLAW_KEY, on);
+    const btn = document.getElementById('outlawBtn');
+
+    if (on) {
+      document.body.classList.add('outlaw-mode');
+      if (btn) btn.classList.add('active');
+      if (this.audio) {
+        this.audio.loop   = true;
+        this.audio.volume = 0.45;
+        this.audio.play().catch(() => {});
+      }
+      if (!silent) {
+        const msg = {
+          role: 'bot',
+          text: '> 🤠 **OUTLAW ENGINEERING MODE ACTIVATED**\n\n```\nBuild.\nTest.\nDocument.\nDeploy.\nImprove.\n```\n\n*The system runs deeper now.*',
+          ts: Date.now(),
+        };
+        state.messages.push(msg);
+        renderMessage(msg);
+        saveMessages();
+        scrollToBottom();
+      }
+    } else {
+      document.body.classList.remove('outlaw-mode');
+      if (btn) btn.classList.remove('active');
+      if (this.audio) { this.audio.pause(); this.audio.currentTime = 0; }
+      if (!silent) {
+        const msg = { role: 'bot', text: '> Returning to Standard Engineering Mode.', ts: Date.now() };
+        state.messages.push(msg);
+        renderMessage(msg);
+        saveMessages();
+        scrollToBottom();
+      }
+    }
+  },
+};
 
 document.addEventListener('DOMContentLoaded', boot);

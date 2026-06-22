@@ -1,14 +1,57 @@
 # SKILLS.md
 
-## VAXINXBOT Skill Registry
+# VAXINXBOT Skill Registry
 
 Purpose:
 
-Defines all supported engineering skills.
+Defines all supported engineering skills, evidence, projects, and future learning paths.
+
+Skills are measured through:
+
+* Real Projects
+* Implementations
+* Documentation
+* Visual Lore Artifacts
+* Repeatable Outputs
+
+Not certificates alone.
 
 ---
 
-## CS50
+# APPLIED ENGINEERING
+
+Level:
+
+Core Methodology
+
+Topics:
+
+* Documentation Systems
+* Visual Lore Artifacts (VLA)
+* Engineering Storytelling
+* AI Collaboration
+* Project Architecture
+* Repository Design
+* Knowledge Capture
+
+Evidence:
+
+* VAXINXBOT
+* LL-OPTICALV2
+* 96-RANCH-RESTAURANT-LP
+* GRAZYNA-JOURNEY-OF-HOPE
+
+Command:
+
+/skill applied-engineering
+
+---
+
+# CS50
+
+Level:
+
+Learning
 
 Topics:
 
@@ -19,13 +62,22 @@ Topics:
 * Algorithms
 * Data Structures
 
+Evidence:
+
+* CS50-CHATBOT-001
+* VLA Documentation
+
 Command:
 
 /skill cs50
 
 ---
 
-## PowerShell
+# POWERSHELL
+
+Level:
+
+Applied
 
 Topics:
 
@@ -35,13 +87,23 @@ Topics:
 * Automation
 * Batch Files
 
+Evidence:
+
+* Push Scripts
+* Project Automation
+* Repository Workflows
+
 Command:
 
 /skill powershell
 
 ---
 
-## Bash
+# BASH
+
+Level:
+
+Learning
 
 Topics:
 
@@ -56,7 +118,11 @@ Command:
 
 ---
 
-## Git
+# GIT
+
+Level:
+
+Applied
 
 Topics:
 
@@ -67,19 +133,37 @@ Topics:
 * Branches
 * Merge
 
+Evidence:
+
+* GitHub Portfolio
+* Repository Management
+* Deployment Workflows
+
 Command:
 
 /skill git
 
 ---
 
-## HTML
+# HTML
+
+Level:
+
+Applied
 
 Topics:
 
 * Semantic Structure
 * Accessibility
 * Layout
+* Components
+
+Evidence:
+
+* LL-OPTICALV2
+* 96-RANCH-RESTAURANT-LP
+* GRAZYNA-JOURNEY-OF-HOPE
+* VAXINXBOT
 
 Command:
 
@@ -87,7 +171,11 @@ Command:
 
 ---
 
-## CSS
+# CSS
+
+Level:
+
+Applied
 
 Topics:
 
@@ -95,6 +183,13 @@ Topics:
 * Flexbox
 * Grid
 * Responsive Design
+* Animation
+
+Evidence:
+
+* LL-OPTICALV2
+* 96-RANCH-RESTAURANT-LP
+* VAXINXBOT
 
 Command:
 
@@ -102,7 +197,11 @@ Command:
 
 ---
 
-## JavaScript
+# JAVASCRIPT
+
+Level:
+
+Applied
 
 Topics:
 
@@ -112,13 +211,31 @@ Topics:
 * Modules
 * APIs
 
+Evidence:
+
+* Theme Engine
+* Slash Commands
+* Knowledge Engine
+* Local Storage Persistence
+* Interactive UI
+
+Projects:
+
+* VAXINXBOT
+* Password Analyzer
+* LL-OPTICALV2
+
 Command:
 
 /skill javascript
 
 ---
 
-## Python
+# PYTHON
+
+Level:
+
+Learning
 
 Topics:
 
@@ -127,13 +244,22 @@ Topics:
 * Data Processing
 * Cybersecurity Scripts
 
+Projects:
+
+* Stoplight Scanner
+* Future Automation Systems
+
 Command:
 
 /skill python
 
 ---
 
-## SQL
+# SQL
+
+Level:
+
+Learning
 
 Topics:
 
@@ -148,7 +274,11 @@ Command:
 
 ---
 
-## Node.js
+# NODE.JS
+
+Level:
+
+Future
 
 Topics:
 
@@ -163,17 +293,133 @@ Command:
 
 ---
 
-## Future Skills
+# DOCUMENTATION
 
-Reserved:
+Level:
+
+Applied
+
+Topics:
+
+* ROADMAP
+* CHANGELOG
+* IMPLEMENTATION
+* Architecture Records
+* Knowledge Capture
+
+Evidence:
+
+* VAXINXBOT Documentation System
+
+Command:
+
+/skill documentation
+
+---
+
+# VLA
+
+Level:
+
+Applied
+
+Topics:
+
+* Screenshot Capture
+* Engineering Memory
+* Learning Timeline
+* Project Evolution
+
+Evidence:
+
+* VAXINXBOT VLA System
+* Visual Engineering Archives
+
+Command:
+
+/skill vla
+
+---
+
+# AI COLLABORATION
+
+Level:
+
+Applied
+
+Topics:
+
+* Prompt Engineering
+* Context Packages
+* Multi-AI Workflows
+* Human + AI Collaboration
+
+Evidence:
+
+* ChatGPT
+* Claude
+* Grok
+
+Command:
+
+/skill ai-collaboration
+
+---
+
+# FUTURE SKILLS
+
+2026
+
+* MCP
+* OpenAI API
+* Claude API
+* Context Engineering
+
+2027
 
 * React
-* MCP
-* OpenAI
-* Claude
-* Cybersecurity
-* DevOps
+* Node Systems
+* AI Tool Integration
+
+2028
+
+* SaaS Architecture
+* AI Workspaces
+* Product Engineering
+
+2029+
+
+* Multi-Agent Systems
+* Engineering Operating Systems
+* Applied Engineering AI Frameworks
+
+---
+
+# SKILL PHILOSOPHY
+
+Learn
+
+↓
+
+Build
+
+↓
+
+Document
+
+↓
+
+Teach
+
+↓
+
+Repeat
+
+---
 
 Status:
 
-RESERVED
+ACTIVE
+
+VAXINXBOT Skill Registry V2
+Applied Engineering AI Operating System
