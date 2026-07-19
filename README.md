@@ -31,7 +31,7 @@ Live : https://regislara-byte.github.io/VAXINXBOT-CS50-ENGINEERING-VAULT/
 
 ---
 
-# Mission
+## Mission
 
 Complete CS50x through project-based learning while building a public engineering portfolio.
 
@@ -56,14 +56,14 @@ Repeat
 
 ---
 
-# Current Focus
+## Current Focus
 
 ## CS50x 2026
 
 Current Progress:
 
 * [x] Week 0 — Scratch
-* [ ] Week 1 — C
+* [x] Week 1 — C
 * [ ] Week 2 — Arrays
 * [ ] Week 3 — Algorithms
 * [ ] Week 4 — Memory
@@ -85,7 +85,7 @@ Current Activities:
 
 ---
 
-# Active Project
+## Active Project
 
 ## PROJECT_003 — JAGLOTL: FLAME CRYSTAL TRIAL
 
@@ -150,7 +150,7 @@ VAXINXBOT/
 
 ---
 
-# VLA — Visual Lore Artifacts
+## VLA — Visual Lore Artifacts
 
 VLA stands for:
 
@@ -176,7 +176,7 @@ Purpose:
 
 ---
 
-# Engineering Workflow
+## Engineering Workflow
 
 ```text
 Watch
@@ -200,7 +200,7 @@ Every project follows this workflow.
 
 ---
 
-# Recent Checkpoints
+## Recent Checkpoints
 
 ### checkpoint_034_cs50_syllabus.png
 
@@ -230,7 +230,7 @@ Development continued locally through documentation and planning.
 
 ---
 
-# Roadmap
+## Roadmap
 
 ## Phase 1 — Scratch Foundations
 
@@ -265,7 +265,7 @@ Development continued locally through documentation and planning.
 
 ---
 
-# Tools
+## Tools
 
 * VS Code
 * PowerShell
@@ -281,7 +281,7 @@ Development continued locally through documentation and planning.
 
 ---
 
-# Current Status
+## Current Status
 
 ```text
 Project:
@@ -302,7 +302,7 @@ Applied Engineering
 
 ---
 
-# Philosophy
+## Philosophy
 
 ```text
 Build small.
