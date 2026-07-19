@@ -6,6 +6,21 @@ VAXINXBOT is my Applied Engineering Vault for CS50x, AI tools, cybersecurity pro
 
 This repository documents my journey from beginner-friendly Scratch projects to real-world software development using GitHub, VS Code, HTML, JavaScript, Python, and AI-assisted workflows.
 
+## AI Assistance Disclosure
+
+This repository documents my personal CS50 learning process.
+
+AI assistance was used for:
+- explaining concepts
+- debugging terminal and folder issues
+- understanding compiler errors
+- organizing notes
+- documenting the workflow
+
+Submitted solutions were typed, tested, reviewed, and understood by me before submission.
+
+The purpose of this vault is learning transparency, engineering memory, and personal progress tracking.
+
 🚀 GitHub Repository
 📚 CS50 Learning Journey
 🗂️ Visual Learning Archive (VLA)
